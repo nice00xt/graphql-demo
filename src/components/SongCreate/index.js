@@ -15,7 +15,7 @@ import {
 
 class SongCreate extends Component {
   state = {
-    alertStatus: ''
+    alertSuccess: false
   }
 
   renderAlert() {
@@ -62,13 +62,15 @@ class SongCreate extends Component {
   }
 
   render () {
+    const { alertSuccess } = this.state;
+
     return (
       <Flex justify="center">
         <Box w="60%" p={4}>
-        <Link to="/" style={{ marginBottom: 20, display: 'block' }}>
+        <Link to="/" style={{ marginBottom: 15, display: 'block' }}>
           <Icon name="arrow-back" size="24px" /> Back
         </Link>
-        { this.renderAlert() }
+        { alertSuccess && this.renderAlert() }
         <br />
         { this.renderForm() }
         </Box>
