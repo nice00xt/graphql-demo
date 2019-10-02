@@ -23,7 +23,7 @@ function App() {
         <Router>
           <SongList path="/" />
           <SongCreate path="create-song" />
-          <SongDetail path="song-detail" />
+          <SongDetail path="song-detail/:id" />
         </Router>
       </Layout>
     </ThemeProvider>

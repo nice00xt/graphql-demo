@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { Link } from '@reach/router';
-import { List, ListItem, ListIcon, Box, Button, Flex } from "@chakra-ui/core";
+import { List, ListItem, Box, Button, Flex, Icon } from "@chakra-ui/core";
 
 class SongList extends Component {
   render () {
@@ -9,10 +9,14 @@ class SongList extends Component {
         <Box bg="#fbfbfb" w="95%" p={4} shadow="md">
           <List spacing={5}>
             <ListItem>
-              <ListIcon icon="star" color="#77bfff" />
-              <span>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit
-              </span>
+              <Flex justify="space-between">
+                <Link to="/">
+                  <span>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit
+                  </span>
+                </Link>
+                <Icon name="delete" size="17px" color="rgb(229, 62, 62)"/>
+              </Flex>
             </ListItem>
           </List>
         </Box>

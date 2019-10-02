@@ -9,7 +9,8 @@ import {
   Flex,
   Button,
   Alert,
-  AlertIcon
+  AlertIcon,
+  Icon
 } from "@chakra-ui/core";
 
 class SongCreate extends Component {
@@ -22,7 +23,6 @@ class SongCreate extends Component {
       <Alert status="success">
         <AlertIcon />
         New song created
-        <Link to="/"> - see the list</Link>
       </Alert>
     )
   }
@@ -65,6 +65,9 @@ class SongCreate extends Component {
     return (
       <Flex justify="center">
         <Box w="60%" p={4}>
+        <Link to="/" style={{ marginBottom: 20, display: 'block' }}>
+          <Icon name="arrow-back" size="24px" /> Back
+        </Link>
         { this.renderAlert() }
         <br />
         { this.renderForm() }
