@@ -10,7 +10,7 @@ class SongList extends Component {
           <List spacing={5}>
             <ListItem>
               <Flex justify="space-between">
-                <Link to="/">
+                <Link to="/song-detail/1">
                   <span>
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit
                   </span>
