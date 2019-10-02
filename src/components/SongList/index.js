@@ -12,7 +12,7 @@ class SongList extends Component {
       return (
         <ListItem key={id}>
           <Flex justify="space-between">
-            <Link to="/song-detail/1">
+            <Link to={`/song-detail/${id}`}>
               <span>
                 {title}
               </span>

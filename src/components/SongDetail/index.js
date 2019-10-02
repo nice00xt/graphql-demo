@@ -1,9 +1,13 @@
 import React, { Component, Fragment } from 'react';
 import { Link } from '@reach/router';
+import { graphql } from 'react-apollo';
+import { fetchSong } from '../../queries/song';
 import { Text, Box, Icon } from "@chakra-ui/core";
 
 class SongDetail extends Component {
   render () {
+    const { data } = this.props;
+    console.log(this.props)
     return (
       <Fragment>
         <Link to="/" style={{ marginBottom: 20, display: 'block' }}>
@@ -18,4 +22,10 @@ class SongDetail extends Component {
   }
 }
 
-export default SongDetail;
+export default graphql(fetchSong, {
+  options: ({ id }) => {
+   return {
+     variables: { id }
+    }
+  }
+})(SongDetail);
