@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { Link } from '@reach/router';
+// import { map } from 'lodash';
 import { List, ListItem, Box, Button, Flex, Icon } from "@chakra-ui/core";
 import { Loading } from '../loading';
 
