@@ -17,7 +17,17 @@ class SongCreate extends Component {
     alertStatus: ''
   }
 
-  render () {
+  renderAlert() {
+    return (
+      <Alert status="success">
+        <AlertIcon />
+        New song created
+        <Link to="/"> - see the list</Link>
+      </Alert>
+    )
+  }
+
+  renderForm () {
     const {
       handleSubmit,
       values,
@@ -27,34 +37,37 @@ class SongCreate extends Component {
      } = this.props;
 
     return (
+      <form onSubmit={handleSubmit}>
+        <FormControl>
+          <FormLabel htmlFor="email">New song</FormLabel>
+          <Input
+            value={values.email}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            name="title"
+            type="text"
+            placeholder="Type the title"
+          />
+          <br />
+          <Button
+            type="submit"
+            variantColor="green"
+            isLoading={isSubmitting}
+          >
+            Add
+          </Button>
+        </FormControl>
+      </form>
+    )
+  }
+
+  render () {
+    return (
       <Flex justify="center">
         <Box w="60%" p={4}>
-        <Alert status="success">
-          <AlertIcon />
-          <Link to="/">New song created see the list</Link>
-        </Alert>
+        { this.renderAlert() }
         <br />
-        <form onSubmit={handleSubmit}>
-          <FormControl>
-            <FormLabel htmlFor="email">New song</FormLabel>
-            <Input
-              value={values.email}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              name="title"
-              type="text"
-              placeholder="Type the title"
-            />
-            <br />
-            <Button
-              type="submit"
-              variantColor="green"
-              isLoading={isSubmitting}
-            >
-              Add
-            </Button>
-          </FormControl>
-        </form>
+        { this.renderForm() }
         </Box>
       </Flex>
     )

@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import { Link } from '@reach/router';
 import { List, ListItem, ListIcon, Box, Button, Flex } from "@chakra-ui/core";
 
 class SongList extends Component {
@@ -17,7 +18,9 @@ class SongList extends Component {
         </Box>
         <br/>
         <Flex justify="flex-end">
-          <Button variantColor="green" >Add new</Button>
+          <Link to="create-song">
+            <Button variantColor="teal" variant="link" border="none">Add new</Button>
+          </Link>
         </Flex>
       </Fragment>
     )
