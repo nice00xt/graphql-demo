@@ -9,7 +9,7 @@ export const fetchSongs = gql`
   }
 `;
 
-export const fecthSongs = gql`
+export const fetchSong = gql`
   query SongQuery($id: ID!) {
     song(id: $id) {
       id
