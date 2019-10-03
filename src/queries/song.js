@@ -10,8 +10,8 @@ export const fetchSongs = gql`
 `;
 
 export const fetchSong = gql`
-  query SongQuery($id: ID!) {
-    song(id: $id) {
+  query SongQuery($id: Int!) {
+    song: songs_by_pk(id: $id) {
       id
       title
     }

@@ -16,6 +16,7 @@ const client = new ApolloClient({
   uri: 'https://juanx-graphql.herokuapp.com/v1/graphql'
 });
 
+
 function App() {
   return (
     <ApolloProvider client={client}>
