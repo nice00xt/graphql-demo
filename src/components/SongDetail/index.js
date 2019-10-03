@@ -15,6 +15,7 @@ class SongDetail extends Component {
     if (loading) {
       return <span>Loading...</span>
     }
+
     return (
       <Fragment>
         <Link to="/" style={{ marginBottom: 20, display: 'block' }}>

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withFormik } from 'formik';
+import { graphql } from 'react-apollo';
 import { Link } from '@reach/router';
 import {
   FormControl,
@@ -12,6 +13,7 @@ import {
   AlertIcon,
   Icon
 } from "@chakra-ui/core";
+import { CreateSong, fetchSongs } from '../../queries/song';
 
 class SongCreate extends Component {
   state = {
@@ -83,9 +85,14 @@ const SongCreateEnhanced = withFormik({
   mapPropsToValues: () => ({
     title: ''
   }),
-  handleSubmit: (values, { setSubmitting, props }) => {
-    setSubmitting(true);
+  handleSubmit: ({ title }, { setSubmitting, props }) => {
+    props.mutate({
+      variables: { title  },
+    }).then(() => {
+      props.navigate("/")
+      setSubmitting(false)
+    })
   },
 })(SongCreate);
 
-export default SongCreateEnhanced;
+export default graphql(CreateSong)(SongCreateEnhanced);

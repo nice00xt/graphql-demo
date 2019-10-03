@@ -19,9 +19,23 @@ export const fetchSong = gql`
 `;
 
 export const deleteSong = gql`
-  mutation DeleteSong($id: ID) {
-    deleteSong(id: $id) {
-      id
+  mutation DeleteSong($id: Int) {
+    delete_songs(where: {id: {_eq: $id}}) {
+      returning {
+        id
+        title
+      }
     }
   }
 `;
+
+export const CreateSong = gql`
+  mutation CreateSong($title: String) {
+    insert_songs(objects: {title: $title}) {
+      returning {
+        id
+        title
+      }
+    }
+  }
+`
