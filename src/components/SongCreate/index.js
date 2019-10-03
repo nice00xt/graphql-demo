@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
-import { withFormik } from 'formik';
-import { graphql } from 'react-apollo';
-import { Link } from '@reach/router';
+import React from 'react';
+import { Formik } from 'formik';
+import { Link, navigate } from '@reach/router';
 import {
   FormControl,
   FormLabel,
@@ -9,90 +8,71 @@ import {
   Box,
   Flex,
   Button,
-  Alert,
-  AlertIcon,
   Icon
 } from "@chakra-ui/core";
-import { CreateSong, fetchSongs } from '../../queries/song';
+import { useMutation } from '@apollo/react-hooks';
+import { createSong, fetchSongs } from '../../queries/song';
 
-class SongCreate extends Component {
-  state = {
-    alertSuccess: false
-  }
-
-  renderAlert() {
-    return (
-      <Alert status="success">
-        <AlertIcon />
-        New song created
-      </Alert>
-    )
-  }
-
-  renderForm () {
-    const {
-      handleSubmit,
-      values,
-      handleChange,
-      handleBlur,
-      isSubmitting
-     } = this.props;
-
-    return (
-      <form onSubmit={handleSubmit}>
-        <FormControl>
-          <FormLabel htmlFor="email">New song</FormLabel>
-          <Input
-            value={values.email}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            name="title"
-            type="text"
-            placeholder="Type the title"
-          />
-          <br />
-          <Button
-            type="submit"
-            variantColor="green"
-            isLoading={isSubmitting}
-          >
-            Add
-          </Button>
-        </FormControl>
-      </form>
-    )
-  }
-
-  render () {
-    const { alertSuccess } = this.state;
-
-    return (
-      <Flex justify="center">
-        <Box w="60%" p={4}>
-        <Link to="/" style={{ marginBottom: 15, display: 'block' }}>
-          <Icon name="arrow-back" size="24px" /> Back
-        </Link>
-        { alertSuccess && this.renderAlert() }
-        <br />
-        { this.renderForm() }
-        </Box>
-      </Flex>
-    )
-  }
+const renderForm = (onCreateSong) => {
+  return (
+    <Formik
+      initialValues={{ title: '' }}
+      onSubmit={({ title }, { setSubmitting }) => {
+        onCreateSong({
+          variables: { title },
+          refetchQueries:[{ query: fetchSongs }]
+        }).then(() => {
+          setSubmitting(false)
+          navigate("/")
+        })
+      }}
+    >
+      {({
+        handleSubmit,
+        values,
+        handleChange,
+        handleBlur,
+        isSubmitting
+      }) => (
+       <form onSubmit={handleSubmit}>
+         <FormControl>
+           <FormLabel>New song</FormLabel>
+           <Input
+             value={values.title}
+             onChange={handleChange}
+             onBlur={handleBlur}
+             name="title"
+             type="text"
+             placeholder="Type the title"
+           />
+           <br />
+           <Button
+             type="submit"
+             variantColor="green"
+             isLoading={isSubmitting}
+           >
+             Add
+           </Button>
+         </FormControl>
+       </form>
+      )}
+    </Formik>
+  )
 }
 
-const SongCreateEnhanced = withFormik({
-  mapPropsToValues: () => ({
-    title: ''
-  }),
-  handleSubmit: ({ title }, { setSubmitting, props }) => {
-    props.mutate({
-      variables: { title  },
-    }).then(() => {
-      props.navigate("/")
-      setSubmitting(false)
-    })
-  },
-})(SongCreate);
+const SongCreate = () => {
+  const [onCreateSong] = useMutation(createSong)
+  return (
+    <Flex justify="center">
+      <Box w="60%" p={4}>
+      <Link to="/" style={{ marginBottom: 15, display: 'block' }}>
+        <Icon name="arrow-back" size="24px" /> Back
+      </Link>
+      <br />
+      { renderForm(onCreateSong) }
+      </Box>
+    </Flex>
+  )
+}
 
-export default graphql(CreateSong)(SongCreateEnhanced);
+export default SongCreate;

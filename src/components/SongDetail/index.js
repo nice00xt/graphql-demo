@@ -1,39 +1,29 @@
-import React, { Component, Fragment } from 'react';
+import React, { Fragment } from 'react';
 import { Link } from '@reach/router';
-import { graphql } from 'react-apollo';
 import { fetchSong } from '../../queries/song';
 import { Text, Box, Icon } from "@chakra-ui/core";
+import { useQuery } from '@apollo/react-hooks';
 
-class SongDetail extends Component {
-  render () {
-    const { data: {
-      loading,
-      song
-      }
-    } = this.props;
+const SongDetail = ({ id }) => {
+  const { loading, data } = useQuery(fetchSong, {
+    variables: { id }
+  })
 
-    if (loading) {
-      return <span>Loading...</span>
-    }
-
-    return (
-      <Fragment>
-        <Link to="/" style={{ marginBottom: 20, display: 'block' }}>
-          <Icon name="arrow-back" size="24px" /> Back
-        </Link>
-        <Box bg="#fbfbfb" w="95%" p={4} shadow="md">
-          <Text fontSize="xl">Song <title></title></Text>
-          <strong>{ song.title }</strong>
-        </Box>
-      </Fragment>
-    )
+  if (loading) {
+    return <span>Loading...</span>
   }
+
+  return (
+    <Fragment>
+      <Link to="/" style={{ marginBottom: 20, display: 'block' }}>
+        <Icon name="arrow-back" size="24px" /> Back
+      </Link>
+      <Box bg="#fbfbfb" w="95%" p={4} shadow="md">
+        <Text fontSize="xl">Song detail</Text>
+        <strong>{ data.song.title }</strong>
+      </Box>
+    </Fragment>
+  )
 }
 
-export default graphql(fetchSong, {
-  options: ({ id }) => {
-   return {
-     variables: { id }
-    }
-  }
-})(SongDetail);
+export default SongDetail;
