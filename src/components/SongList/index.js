@@ -1,12 +1,12 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import { Link } from '@reach/router';
 import { map } from 'lodash';
-import { List, ListItem, Box, Button, Flex, Icon } from "@chakra-ui/core";
+import { List, ListItem, Box, Button, Flex, Icon, Spinner } from "@chakra-ui/core";
 import { Loading } from '../loading';
-import { fetchSongs } from '../../queries/song';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery, useMutation } from '@apollo/react-hooks';
+import { fetchSongs, deleteSong } from '../../queries/song';
 
-const renderList = (songs) => {
+const renderList = ({ songs }, onDeleteSong, refetch, setLoading, isRemoving ) => {
   return map(songs, ({ id, title }) => {
     return (
       <ListItem key={id}>
@@ -16,7 +16,23 @@ const renderList = (songs) => {
               {title}
             </span>
           </Link>
-          <Icon name="delete" size="17px" color="rgb(229, 62, 62)" />
+          <Button
+            onClick={() => {
+              setLoading(id)
+              return onDeleteSong(
+              {variables: { id }
+              }).then(() => {
+                setLoading('')
+                refetch();
+              })
+            }}
+            border="none"
+            variantColor="white"
+            style={{ cursor: 'pointer' }}>
+            { isRemoving === id
+              ? <Spinner color="#319795" />
+              : <Icon name="delete" size="17px" color="rgb(229, 62, 62)" /> }
+          </Button>
         </Flex>
       </ListItem>
     )
@@ -24,13 +40,16 @@ const renderList = (songs) => {
 }
 
 const SongList = () => {
-  const { loading, data } = useQuery(fetchSongs);
+  const { loading, data, refetch } = useQuery(fetchSongs);
+  const [ onDeleteSong ] = useMutation(deleteSong);
+  const [ isRemoving, setLoading ] = useState('');
+
   if (loading) { return <Loading /> }
   return (
     <Fragment>
       <Box bg="#fbfbfb" w="95%" p={4} shadow="md">
         <List spacing={5}>
-          { renderList(data.songs) }
+          { renderList(data, onDeleteSong, refetch, setLoading, isRemoving) }
         </List>
       </Box>
       <br/>
