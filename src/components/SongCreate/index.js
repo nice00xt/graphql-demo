@@ -12,11 +12,17 @@ import {
 } from "@chakra-ui/core";
 import { useMutation } from '@apollo/react-hooks';
 import { createSong, fetchSongs } from '../../queries/song';
+import * as Yup from 'yup';
+
+const validations = Yup.object().shape({
+  title: Yup.string().required('required')
+});
 
 const renderForm = (onCreateSong) => {
   return (
     <Formik
       initialValues={{ title: '' }}
+      validationSchema={validations}
       onSubmit={({ title }, { setSubmitting }) => {
         onCreateSong({
           variables: { title },

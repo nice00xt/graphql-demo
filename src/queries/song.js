@@ -30,7 +30,9 @@ export const createSong = gql`
 `
 export const updateSong = gql`
   mutation UpdateSong($title: String, $id: Int!) {
-    update_songs(where: {id: {_eq: $id}}, _set: {title: $title}) {
+    update_songs(
+      where: {id: {_eq: $id}},
+      _set: {title: $title}) {
       returning {
         id
         title
