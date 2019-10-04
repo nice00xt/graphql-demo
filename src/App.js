@@ -5,8 +5,8 @@ import { theme, ThemeProvider } from "@chakra-ui/core";
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
 
-import { WebSocketLink } from 'apollo-link-ws';
-import { HttpLink } from 'apollo-link-http';
+// import { WebSocketLink } from 'apollo-link-ws';
+// import { HttpLink } from 'apollo-link-http';
 
 import SongList from './components/SongList';
 import SongCreate from './components/SongCreate';
