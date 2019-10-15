@@ -1,11 +1,10 @@
-import React, { Component, Fragment } from 'react';
+import React, { Fragment } from 'react';
 import { Link } from '@reach/router';
 // import { map } from 'lodash';
 import { List, ListItem, Box, Button, Flex, Icon } from "@chakra-ui/core";
-import { Loading } from '../loading';
 
-class SongList extends Component {
-  renderList() {
+export const SongList = () => {
+  const renderList = () => {
     return (
       <ListItem>
         <Flex justify="space-between">
@@ -20,28 +19,21 @@ class SongList extends Component {
     )
   }
 
-  render () {
-    const loading = false;
-    if (loading) {
-      return <Loading />
-    }
-
-    return (
-      <Fragment>
-        <Box bg="#fbfbfb" w="95%" p={4} shadow="md">
-          <List spacing={5}>
-            {this.renderList()}
-          </List>
-        </Box>
-        <br/>
-        <Flex justify="flex-end">
-          <Link to="create-song">
-            <Button variantColor="teal" variant="link" border="none">Add new</Button>
-          </Link>
-        </Flex>
-      </Fragment>
-    )
-  }
+  return (
+    <Fragment>
+      <Box bg="#fbfbfb" w="95%" p={4} shadow="md">
+        <List spacing={5}>
+          {renderList()}
+        </List>
+      </Box>
+      <br/>
+      <Flex justify="flex-end">
+        <Link to="create-song">
+          <Button variantColor="teal" variant="link" border="none">Add new</Button>
+        </Link>
+      </Flex>
+    </Fragment>
+  )
 }
 
 export default SongList;
