@@ -3,7 +3,7 @@ import { Router } from '@reach/router';
 import { theme, ThemeProvider } from "@chakra-ui/core";
 
 import ApolloClient from 'apollo-boost';
-import { ApolloProvider } from 'react-apollo';
+import { ApolloProvider } from '@apollo/react-hooks';
 
 // import { WebSocketLink } from 'apollo-link-ws';
 // import { HttpLink } from 'apollo-link-http';
@@ -19,8 +19,7 @@ const client = new ApolloClient({
   uri: 'https://juanx-graphql.herokuapp.com/v1/graphql'
 });
 
-
-function App() {
+const App = () => {
   return (
     <ApolloProvider client={client}>
       <ThemeProvider theme={theme}>

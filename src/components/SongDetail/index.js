@@ -64,6 +64,8 @@ const renderForm = (onUpdateSong, { title, id }, setShowForm) => {
                 type="submit"
                 variantColor="green"
                 isLoading={isSubmitting}
+                loadingText="Saving"
+                disabled={isSubmitting}
               >
                 Save
               </Button>

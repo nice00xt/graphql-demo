@@ -56,6 +56,8 @@ const renderForm = (onCreateSong) => {
              type="submit"
              variantColor="green"
              isLoading={isSubmitting}
+             disabled={isSubmitting}
+             loadingText="Adding"
            >
              Add
            </Button>
