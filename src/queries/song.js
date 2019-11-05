@@ -1,7 +1,7 @@
 import gql from 'graphql-tag'
 
 export const fetchSongs = gql`
-  {
+  subscription Songs {
     songs {
       id
       title

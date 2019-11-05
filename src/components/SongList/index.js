@@ -3,10 +3,10 @@ import { Link } from '@reach/router';
 import { map } from 'lodash';
 import { List, ListItem, Box, Button, Flex, Icon, Spinner } from "@chakra-ui/core";
 import { Loading } from '../loading';
-import { useQuery, useMutation } from '@apollo/react-hooks';
+import { useSubscription, useMutation } from '@apollo/react-hooks';
 import { fetchSongs, deleteSong } from '../../queries/song';
 
-const renderList = ({ songs }, onDeleteSong, refetch, setLoading, isRemoving ) => {
+const renderList = ({ songs }, onDeleteSong, setLoading, isRemoving ) => {
   return map(songs, ({ id, title }) => {
     return (
       <ListItem key={id}>
@@ -22,8 +22,7 @@ const renderList = ({ songs }, onDeleteSong, refetch, setLoading, isRemoving ) =
               return onDeleteSong(
               {variables: { id }
               }).then(() => {
-                setLoading('')
-                refetch();
+                setLoading('');
               })
             }}
             border="none"
@@ -40,7 +39,7 @@ const renderList = ({ songs }, onDeleteSong, refetch, setLoading, isRemoving ) =
 }
 
 const SongList = () => {
-  const { loading, data, refetch } = useQuery(fetchSongs);
+  const { loading, data } = useSubscription(fetchSongs);
   const [ onDeleteSong ] = useMutation(deleteSong);
   const [ isRemoving, setLoading ] = useState('');
 
@@ -49,7 +48,7 @@ const SongList = () => {
     <Fragment>
       <Box bg="#fbfbfb" w="95%" p={4} shadow="md">
         <List spacing={5}>
-          { renderList(data, onDeleteSong, refetch, setLoading, isRemoving) }
+          { renderList(data, onDeleteSong, setLoading, isRemoving) }
         </List>
       </Box>
       <br/>

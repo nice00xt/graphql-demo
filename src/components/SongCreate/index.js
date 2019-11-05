@@ -11,7 +11,7 @@ import {
   Icon
 } from "@chakra-ui/core";
 import { useMutation } from '@apollo/react-hooks';
-import { createSong, fetchSongs } from '../../queries/song';
+import { createSong } from '../../queries/song';
 import * as Yup from 'yup';
 
 const validations = Yup.object().shape({
@@ -25,8 +25,7 @@ const renderForm = (onCreateSong) => {
       validationSchema={validations}
       onSubmit={({ title }, { setSubmitting }) => {
         onCreateSong({
-          variables: { title },
-          refetchQueries:[{ query: fetchSongs }]
+          variables: { title }
         }).then(() => {
           setSubmitting(false)
           navigate("/")
