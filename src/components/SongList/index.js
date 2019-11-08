@@ -27,10 +27,10 @@ const renderList = ({ songs }, onDeleteSong, setLoading, isRemoving ) => {
             }}
             border="none"
             variantColor="white"
+            isLoading={isRemoving === id}
+            loadingText="Deleting"
             style={{ cursor: 'pointer' }}>
-            { isRemoving === id
-              ? <Spinner color="#319795" />
-              : <Icon name="delete" size="17px" color="rgb(229, 62, 62)" /> }
+            <Icon name="delete" size="17px" color="rgb(229, 62, 62)" />
           </Button>
         </Flex>
       </ListItem>
